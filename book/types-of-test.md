@@ -21,7 +21,7 @@ You can read more in the [Component vs (UI) Integration vs E2E tests: UI tests c
 The "Test Pyramid" is a famous metaphor in the programming world about the cost-effort of diffent types of testing and how much of each should be present in a codebase (where the top very expensive and the bottom less expensive)
 
 <div>
-    <img src="../assets/images/test-pyramid.png" alt="Testing pyramid" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/types-of-test/test-pyramid.png" alt="Testing pyramid" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
@@ -30,7 +30,7 @@ While the Testing Pyramid idea has been based on solid arguments, it considered 
 Kent C. Dodds created a new version of the pyramid, the "the Testing Trophy". Kent created the trophy based not only on the cost of the tests but on the **return of investment**. He highlighted the "Integration test" area as the most important one ([Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests/) by Kent C. Dodds)
 
 <div>
-    <img src="../assets/images/test-trophy.jpg" alt="Testing trophy" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/types-of-test/test-trophy.jpg" alt="Testing trophy" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 

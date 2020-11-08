@@ -10,7 +10,7 @@ A lot of concerns come from testing the visual aspect of a front-end application
 
 - the confidence they give is relative, a lot of times **they give false negatives**. You usually set a "tolerance" ratio that does not care if, for example, "less than 2% of the pixels are different". Why do you need to set it? Well, take a look at the next image
 
-![Visual Regression Testing is hard](../assets/images/visual-regression-testing-is-hard.jpg)
+![Visual Regression Testing is hard](../assets/images/visual-regression-testing/visual-regression-testing-is-hard.jpg)
 
 the image in the center highlights the difference, in terms of changed pixels, between the two images... Just for a browser update...
 

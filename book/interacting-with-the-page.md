@@ -2,7 +2,7 @@
 
 First of all: we need to automate the Cypress test to fill the form and click the "Sign up" button for us. How could we accomplish that?
 
-<img src="../assets/images/signup-page.png" alt="The signup page"/>
+<img src="../assets/images/interacting-with-the-page/signup-page.png" alt="The signup page"/>
 
 Well, we need to:
 
@@ -120,7 +120,7 @@ it("The happy path should work", () => {
 
 - "_No articles are here... yet._" is the string that the home page shows when the signup flow ends. After successful registration, the user is redirected to the home page, the "Your Feed" does not contain any posts yet. Think about it as the proof that everything worked (while testing the signup flow, obviously)
 
-<img src="../assets/images/signup-feedback.png" alt="Cypress Conduit" class="img-border"/>
+<img src="../assets/images/interacting-with-the-page/signup-feedback.png" alt="Cypress Conduit" class="img-border"/>
 
 - the [`cy.contains()`](https://docs.cypress.io/api/commands/contains.html#Syntax) API gets the DOM element containing the text
 

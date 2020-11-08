@@ -9,8 +9,8 @@ Anyway, two of the three main E2E testing problems were front-end developer inde
 
 but there are a lot of error paths that are not been covered yet. The [RealWorld](the-realworld-project.md) front-end does not manage "all" possible paths, but then if the back-end app responds with an error "email/user already registered", it prints the error as they are.
 
-![email already used](../assets/images/error-path-1.png)
-![email and username already used](../assets/images/error-path-2.png)
+![email already used](../assets/images/front-end-testing-on-steroids/error-path-1.png)
+![email and username already used](../assets/images/front-end-testing-on-steroids/error-path-2.png)
 
 Spying the back-end response, it turns out that its something like `{ errors: { email: "is already taken." } }` and the response status is `422`. We need to reproduce it with the `cy.route`, [its options](https://docs.cypress.io/api/commands/route.html#Arguments) contemplate the `status` option too. All we need to do is passing all exploded options to the `cy.route` command
 

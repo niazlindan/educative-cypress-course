@@ -2,7 +2,7 @@
 
 [Stefano Magni](#stefano-magni)
 
-<a href="#stefano-magni"><img src="../assets/images/stefano-magni.jpg" alt="Stefano Magni" style="max-width: 40%;"/></a>
+<a href="#stefano-magni"><img src="../assets/images/about-us/stefano-magni.jpg" alt="Stefano Magni" style="max-width: 40%;"/></a>
 
 
 ### Stefano Magni

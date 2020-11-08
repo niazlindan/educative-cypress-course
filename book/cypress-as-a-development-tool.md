@@ -45,21 +45,21 @@ Do you know that Cypress could be launched in **every Chrome** version? Do you k
 Take a look at the upper right corner of the Cypress list of tests
 
 <div>
-    <img src="../assets/images/chrome-instances.png" alt="A list of the available Chrome version" style="width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/cypress-as-a-development-tool/chrome-instances.png" alt="A list of the available Chrome version" style="width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
 Cypress allows us to choose the Chrome instances that it finds on our machine. I prefer to use Chrome Canary instead of the standard Chrome just to have a different (yellow) icon and recognize immediately the testing-dedicated browser.
 
 <div>
-    <img src="../assets/images/chrome-canary.png" alt="Chrome Canary controlled by Cypress" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/cypress-as-a-development-tool/chrome-canary.png" alt="Chrome Canary controlled by Cypress" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
 and, with a real Google Chrome instance, we can install the React and Redux DevTools as usual (from the Chrome extension website).
 
 <div>
-    <img src="../assets/images/react-and-redux-devtools.png" alt="Chrome Canary controlled by Cypress" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/cypress-as-a-development-tool/react-and-redux-devtools.png" alt="Chrome Canary controlled by Cypress" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
@@ -80,12 +80,12 @@ the snippet is needed because the React app runs inside an iframe when launched 
 
 About the Chrome DevTools console: to access the global scope of your app you need to change the JavaScript context in the upper-left corner of the console itself. See the next screenshot where `window.appActions` (defined during the [App Actions chapter](app-actions.md)) becomes available only after a context selection.
 
-![Chrome DevTools context change](../assets/images/console.javascript-context-update.png)
+![Chrome DevTools context change](../assets/images/cypress-as-a-development-tool/console.javascript-context-update.png)
 
 To avoid going back and forth from the code test to exclude/select the tests: we could add the [cypress-skip-and-only-ui](https://github.com/bahmutov/cypress-skip-and-only-ui) plugin that adds some buttons to the Test Runner. These buttons allow us to run only a test, to skip some tests or to restore the standard order of the tests. It does, through some simple buttons, what we usually do manually adding `.only` or `.skip` to the tests.
 
 <div>
-    <img src="../assets/images/cypress-skip-and-only-ui-plugin.png" alt="Cypress Skip And Only UI plugin" style="width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/cypress-as-a-development-tool/cypress-skip-and-only-ui-plugin.png" alt="Cypress Skip And Only UI plugin" style="width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 

@@ -3,7 +3,7 @@
 We have just written our first [Custom Command](signup-custom-command.md) that registers a new user for every test. What is its biggest problem? Well, it's **really, really, slow**. The <i>signup-command-1.e2e.spec.js</i> tests take twelve to fifteen seconds to run the empty tests:
 
 <div>
-    <img src="../assets/images/slow-tests.png" alt="Autocompletion" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/app-actions/slow-tests.png" alt="Autocompletion" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
@@ -77,7 +77,7 @@ You can find the whole code of the custom command into the `signup-v2.js` custom
 The `signupV2` custom command is used by the <i>signup-command-2.e2e.spec.js</i> test and the performance improvement is notable compared to the previous <i>signup-command-1.e2e.spec.js</i> one
 
 <div>
-    <img src="../assets/images/slow-tests-improvement.png" alt="Autocompletion" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/app-actions/slow-tests-improvement.png" alt="Autocompletion" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 

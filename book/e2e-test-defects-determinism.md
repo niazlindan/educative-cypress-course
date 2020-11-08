@@ -21,7 +21,7 @@ context("Signup flow", () => {
 
 This test has a lot of problems, first of all: it's not deterministic (**its behavior is not the same every time we launch it**). This limitation is obvious, even if the RealWorld database starts pristine, the test is going to succeed only once. The second time, the user will be already registered and the result will be different.
 
-<img src="../assets/images/failure-second-time.jpg" alt="The test fails the second time" class="img-border"/>
+<img src="../assets/images/e2e-test-defects-determinism/failure-second-time.jpg" alt="The test fails the second time" class="img-border"/>
 
 There are more solutions, we could:
 

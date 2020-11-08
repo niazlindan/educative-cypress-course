@@ -8,7 +8,7 @@ Let's start with a real Cypress test:
 A closer look line by line:
 
 - `/// <reference types="Cypress" />` allows us to leverage [VS Code Intellisense](https://code.visualstudio.com/docs/editor/intellisense) for the autocompletion
-  <img src="../assets/gifs/reference-types-cypress.gif" alt="VSCode Intellisense"/>
+  <img src="../assets/images/opening-cypress/reference-types-cypress.gif" alt="VSCode Intellisense"/>
 
 - `context("...` is the same of `describe("...`, it helps to group some related tests
 
@@ -34,20 +34,20 @@ In order to see the test running, we must now open Cypress. Run `$ npm run cy:op
 
 If Cypress prompts you with an alert like the following one, it's because you have not the Conduit website running
 
-<img src="../assets/images/cypress-no-working-website.png" alt="Cypress tells that the website is not running" class="img-border"/>
+<img src="../assets/images/opening-cypress/cypress-no-working-website.png" alt="Cypress tells that the website is not running" class="img-border"/>
 
 Launch `npm run realworld:start` in the terminal and everything is going to work. In case of troubles take a look at the [Conduit](the-realworld-project.md) chapter.
 
 Now you can see the page launched by the test
 
-<img src="../assets/images/cypress-signup-conduit.png" alt="Cypress Conduit" class="img-border"/>
+<img src="../assets/images/opening-cypress/cypress-signup-conduit.png" alt="Cypress Conduit" class="img-border"/>
 
 ### The Test Runner
 
 On the left you can see the Test Runner, it's one of the greatest features of Cypress. It allows you to analyze what's happening in the front-end application.
 
 <div>
-  <img src="../assets/images/test-runner.png" alt="The Test Runner" style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); display: block; margin-left: auto; margin-right: auto;"/>
+  <img src="../assets/images/opening-cypress/test-runner.png" alt="The Test Runner" style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); display: block; margin-left: auto; margin-right: auto;"/>
 </div>
 <br /><br />
 Being able to read what's happening in the front-end app is amazing because you have most of the needed feedback while developing/debugging/testing. **You know all the details** about the AJAX calls the front-end is doing, you know if some errors happened in the front-end code, you know what Cypress is doing, you know the result of the assertions...

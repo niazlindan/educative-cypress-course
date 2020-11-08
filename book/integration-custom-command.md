@@ -54,7 +54,7 @@ context("The custom command could be run before the test code", () => {
 But, when running it, we get an error from Cypress
 
 <div>
-    <img src="../assets/images/unstubbed-get-user.png" alt="Unstubber GET api/users" style="width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/integration-custom-command/unstubbed-get-user.png" alt="Unstubber GET api/users" style="width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
@@ -143,7 +143,7 @@ The complete code is the following
 Take a look at the duration of the second test
 
 <div>
-    <img src="../assets/images/integration-testing-custom-authenticate-command.png" alt="Integration Testing, custom authenticate command" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/integration-custom-command/integration-testing-custom-authenticate-command.png" alt="Integration Testing, custom authenticate command" style="width: 100%; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 

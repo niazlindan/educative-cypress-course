@@ -60,7 +60,7 @@ that's the output...
 ... and the screenshot taken by Cypress.
 
 <div style="max-height: 500px; overflow:hidden;">
-    <img src="../assets/images/headless-browser-screenshot-2.png" alt="Headless browser screenshot" style="width: 100%; max-width: 300px; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/headless-browser/headless-browser-screenshot-2.png" alt="Headless browser screenshot" style="width: 100%; max-width: 300px; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 
 <br /><br />
@@ -85,11 +85,11 @@ $ npm run cy:open
 
 The Cypress UI pops up, look for the `headless-browser.spec.js` test and launch it
 
-<img src="../assets/images/headless-browser-spec.png" alt="Headless browser"/>
+<img src="../assets/images/headless-browser/headless-browser-spec.png" alt="Headless browser"/>
 
 Cypress launch the Electron browser and run the test inside it
 
-<img src="../assets/images/headless-browser-screenshot.png" alt="Headless browser"/>
+<img src="../assets/images/headless-browser/headless-browser-screenshot.png" alt="Headless browser"/>
 
 That's what "leveraging a headless browser" means: automating some actions inside a browser that can be launched without a GUI (or with it if needed).
 

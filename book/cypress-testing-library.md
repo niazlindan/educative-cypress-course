@@ -93,12 +93,12 @@ it("The happy path should work", () => {
 
 we get an error
 
-![More elements error](../assets/images/more-elements.png)
+![More elements error](../assets/images/cypress-testing-library/more-elements.png)
 <br /><br />
 more in detail, the error is the following
 
 <div>
-    <img src="../assets/images/more-elements-error.png" alt="More elements error" style="width: 100%; max-width: 576px; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/cypress-testing-library/more-elements-error.png" alt="More elements error" style="width: 100%; max-width: 576px; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 
