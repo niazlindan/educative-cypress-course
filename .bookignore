@@ -1,0 +1,17 @@
+package-lock.json
+package.json
+reactjsday-2019-testing-course.code-workspace
+slides
+.gitignore
+__tests__
+tests
+cypress
+cypress.json
+jest-testing-fundamentals
+react-cinema-app
+react-testing-fundamentals
+realworld
+renovate.json
+utils
+.travis.yml
+.all-contributorsrc

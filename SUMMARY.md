@@ -1,0 +1,102 @@
+# Summary
+
+- [React Testing Course](README.md)
+  - [Course description](book/course-description.md)
+  - [About us](book/about-us.md)
+- ***
+- Testing definitions
+  - [What is a test?](book/what-is-a-test.md)
+  - [Types of Test](book/types-of-test.md)
+- Testing introduction
+  - [Why Testing?](book/why-testing.md)
+  - [Testing rules](book/testing-rules.md)
+  - [Having fun while testing](book/having-fun-while-testing.md)
+  - [The cost of testing](book/the-cost-of-testing.md)
+- ***
+- [An easier journey: top to bottom](book/top-to-bottom.md)
+- ***
+- E2E Testing
+  - [Headless browser](book/headless-browser.md)
+  - [What is an E2E test](book/what-is-an-e2e-test.md)
+- The first E2E test
+  - [Conduit: the Realworld project](book/the-realworld-project.md)
+  - [Testing the signup flow: challenges](book/signup-flow-challenges.md)
+  - [Opening Cypress](book/opening-cypress.md)
+  - [Interacting with the page](book/interacting-with-the-page.md)
+  - [Cypress waitings and execution order](book/cypress-waitings-and-execution-order.md)
+  - Main E2E test defects
+    - [Determinism](book/e2e-test-defects-determinism.md)
+    - [Stability](book/e2e-test-defects-stability.md)
+    - [Utility in case of failure](book/utility-in-case-of-failure.md)
+- Polishing the E2E test
+  - DOM elements selection
+    - [data-testid](book/dom-elements-selection.md)
+    - [cypress-testing-library](book/cypress-testing-library.md)
+  - [Sharing app constants](book/app-constants.md)
+- AJAX requests
+  - [Waiting for an AJAX request](book/waiting-for-ajax-request.md)
+  - [Asserting on payloads](book/payload-assertions.md)
+- Custom Commands
+  - [Signup](book/signup-custom-command.md)
+  - [Intellisense](book/custom-command-intellisense.md)
+  - [App Actions](book/app-actions.md)
+  - [Sharing authentication state](book/sharing-authentication-state.md)
+- UI Integration Tests
+  - [Stubbing the Back-end](book/stubbing-the-backend.md)
+  - [Fixtures](book/fixtures.md)
+  - [Custom command](book/integration-custom-command.md)
+  - [Front-end testing on steroids](book/front-end-testing-on-steroids.md)
+  - [Cypress as a development tool](book/cypress-as-a-development-tool.md)
+- Other best practices
+  - [Dedicated scripts](book/dedicated-scripts.md)
+  - [Monitoring tests](book/monitoring-tests.md)
+  - [Controlling the clock](book/controlling-the-clock.md)
+- [Continuous integration](book/continuous-integration.md)
+- [Visual Regression Testing](book/visual-regression-testing.md)
+- [Cypress vs other tools](book/cypress-vs-other-tools.md)
+- [Why is E2E testing not enough?](book/why-is-e2e-testing-not-enough.md)
+- ***
+- Jest fundamentals
+
+  - [What You will learn](book/jest-101/index.md)
+  - [What is Jest](book/jest-101/what-is-jest.md)
+  - [Setup](book/jest-101/setup.md)
+  - [Running Jest](book/jest-101/running-jest.md)
+  - [What is a Test Case](book/jest-101/test-case.md)
+  - [Watch-mode](book/jest-101/watch-mode.md)
+  - [Valid file test names](book/jest-101/test-filenames.md)
+  - [Add editor autocompletion](book/jest-101/editor-autocompletion.md)
+  - [Built-in Matchers](book/jest-101/built-in-matchers.md)
+  - [Custom Matchers](book/jest-101/custom-matchers.md)
+  - [Testing async code](book/jest-101/testing-async-code.md)
+  - [jsdom](book/jest-101/jsdom.md)
+  - [Jest lifecycle](book/jest-101/jest-lifecycle.md)
+  - [Mock functions](book/jest-101/mock-function.md)
+  - [Mocking a module](book/jest-101/mock-modules.md)
+  - [The expect object](book/jest-101/expect-object.md)
+  - [Timers](book/jest-101/timers.md)
+
+- ***
+- [The many ways to test React](book/many-ways-to-test-react.md)
+- ***
+- Intro to React testing
+  - [What you will learn](book/intro-to-react-testing/index.md)
+  - [Setup](book/intro-to-react-testing/setup.md)
+  - [react-dom-test-utils](book/intro-to-react-testing/react-dom-test-utils.md)
+  - [Hooks and act](book/intro-to-react-testing/hooks-and-act.md)
+  - [jest-dom](book/intro-to-react-testing/jest-dom.md)
+- ***
+- React Testing Library
+  - [What You will learn](book/react-testing-library/index.md)
+  - [What is React Testing Library](book/react-testing-library/what.md)
+  - [Why React Testing Library](book/react-testing-library/why-react-testing-library.md)
+  - [Setup React Testing Library](book/react-testing-library/setup.md)
+  - [Rendering using React Testing Library](book/react-testing-library/rendering.md)
+  - [Using DOM testing library](book/react-testing-library/dom-testing-library.md)
+  - [Implementing and Testing new features](book/react-testing-library/custom-input.md)
+  - [Dealing with Context Providers](book/react-testing-library/context.md)
+  - [Testing components using Redux](book/react-testing-library/redux.md)
+- ***
+- [Resources](book/resources.md)
+- ***
+- [About this book](book/about-the-book.md)
