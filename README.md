@@ -6,7 +6,6 @@
 [![Build Status](https://travis-ci.com/NoriSte/educative-cypress-course.svg?branch=master)](https://travis-ci.com/NoriSte/educative-cypress-course)
 [![Build Cron](https://img.shields.io/badge/build%20cron-weekly-44cc11.svg)](https://travis-ci.com/NoriSte/educative-cypress-course)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
-[![Cypress Dashboard](https://img.shields.io/static/v1?label=Cypress&message=Dashboard&color=00BF88)](https://dashboard.cypress.io/#/projects/jdiekj/runs)
 
 ![ReactJSDay 2019 Testing Course](assets/images/reactjsday-course.png)
 

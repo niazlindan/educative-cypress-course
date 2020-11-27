@@ -1,6 +1,5 @@
 # Resources
 
-Watch the videos of the tests of this project directly into the [Cypress Dashboard](https://dashboard.cypress.io/#/projects/jdiekj/runs) (GitHub/Google sign in required).
 
 
 ### Cypress Docs
