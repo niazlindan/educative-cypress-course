@@ -13,8 +13,7 @@ context("Signup flow", () => {
       password: "mysupersecretpassword"
     };
     // set up AJAX call interception
-    cy.server();
-    cy.route("POST", "**/api/users").as("signup-request");
+    cy.intercept("POST", "**/api/users").as("signup-request");
 
     cy.visit(paths.register);
 
@@ -28,26 +27,26 @@ context("Signup flow", () => {
       .within(() => cy.findByText(strings.signUp).click());
 
     // ... and AJAX call waiting
-    cy.wait("@signup-request").should(xhr => {
+    cy.wait("@signup-request").should(interception => {
       let payload;
 
       // request check
-      expect(xhr.request.body)
+      expect(interception.request.body)
         .to.have.property("user")
         .and.to.be.a("object");
-      payload = xhr.request.body.user;
+      payload = interception.request.body.user;
       expect(payload).to.have.property("username", user.username);
       expect(payload).to.have.property("email", user.email);
       expect(payload).to.have.property("password", user.password);
 
       // status check
-      expect(xhr.status).to.equal(200);
+      expect(interception.response.statusCode).to.equal(200);
 
       // response check
-      expect(xhr.response.body)
+      expect(interception.response.body)
         .to.have.property("user")
         .and.to.be.a("object");
-      payload = xhr.response.body.user;
+      payload = interception.response.body.user;
       expect(payload).to.have.property("username", user.username.toLowerCase());
       expect(payload).to.have.property("email", user.email);
       expect(payload)

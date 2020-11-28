@@ -65,7 +65,7 @@ that's the output...
 
 <br /><br />
 
-As you can see, it's the screenshot of the [ReactJSDay website](https://2019.reactjsday.it).
+As you can see, it's the screenshot of the [Educative website](https://www.educative.io/).
 
 Take a look at the Cypress log, it launched Electron (a sort of soft version of Chrome) in headless mode, it launched the test and the test saved the screenshot. While Electron is a real browser, you have not seen anything about it: that's how a headless browser works!
 

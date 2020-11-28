@@ -64,11 +64,7 @@ Cypress.Commands.add("signupV1", ({ email, username, password } = {}) => {
 });
 ```
 
-The rest of the code is 100% the same of the <i>signup-8-simpler-assertions.e2e.spec.js</i> test, the only changes are placed in the end:
-
-- a `cy.server({ enable: false });` to restore the original `cy.server` behavior
-
-- a closing `cy.then(() => user);` so the data used to register the user can be consumed by chaining a command to the `cy.signupV1()` call
+The rest of the code is 100% the same of the <i>signup-8-simpler-assertions.e2e.spec.js</i> test, the only change is placed at the end: a closing `cy.then(() => user);` so the data used to register the user can be consumed by chaining a command to the `cy.signupV1()` call.
 
 The whole code is the following:
 

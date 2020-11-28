@@ -3,8 +3,10 @@
 import { newPost } from "../../../realworld/frontend/src/components/Header";
 
 Cypress.Commands.add("authenticateAndVisitIntegration", path => {
-  cy.server();
-  cy.route("GET", "**/api/user", "fixture:users/signup").as("get-user");
+  cy.intercept("GET", "**/api/user", {
+    fixture: "users/signup",
+    headers: { "Access-Control-Allow-Origin": "*" }
+  }).as("get-user");
   cy.fixture("users/signup")
     .its("user")
     .should(

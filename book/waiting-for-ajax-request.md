@@ -34,24 +34,20 @@ First of all, we need to set up AJAX call interception:
 
 ```diff
 it("The happy path should work", () => {
-+ cy.server();
-+ cy.route("POST", "**/api/users");
++ cy.intercept("POST", "**/api/users");
 
   cy.visit(paths.register);
   // the rest of the test code
 });
 ```
 
-- [`cy.server()`](https://docs.cypress.io/api/commands/server.html) tells Cypress to act as a proxy, intercepting and allowing to wait for AJAX requests
-
-- [`cy.route`](https://docs.cypress.io/api/commands/route.html) tells Cypress to intercept some AJAX requests. We can use [a lot of options](https://docs.cypress.io/api/commands/route.html#Arguments) to match precisely which AJAX request we want to intercept. `cy.route("POST", "**/api/users")` tells Cypress to intercept every `POST` request to every URL that ends with `**/api/users` (the signup form makes a request to the `http://localhost:3100/api/users`, Cypress uses [minimatch](https://github.com/isaacs/minimatch) to take advantage of \* and \*\* glob support).
+[`cy.intercept`](https://docs.cypress.io/api/commands/intercept.html) tells Cypress to intercept some requests. We can use [a lot of options](https://docs.cypress.io/api/commands/intercept.html#Arguments) to match precisely which AJAX request we want to intercept. `cy.intercept("POST", "**/api/users")` tells Cypress to intercept every `POST` request to every URL that ends with `**/api/users` (the signup form makes a request to the `http://localhost:3100/api/users`, Cypress uses [minimatch](https://github.com/isaacs/minimatch) to take advantage of \* and \*\* glob support).
 
 Second: we need to set a [Cypress alias](https://docs.cypress.io/guides/core-concepts/variables-and-aliases.html) to reference it later on
 
 ```diff
 it("The happy path should work", () => {
-  cy.server();
-  cy.route("POST", "**/api/users")
+  cy.intercept("POST", "**/api/users")
 +   .as("signup-request");
 
   cy.visit(paths.register);
@@ -63,8 +59,7 @@ Third: we must "wait" the AJAX request triggered by the front-end app
 
 ```diff
 it("The happy path should work", () => {
-  cy.server();
-  cy.route("POST", "**/api/users")
+  cy.intercept("POST", "**/api/users")
     .as("signup-request");
   cy.visit(paths.register);
   // form filling code
@@ -88,8 +83,7 @@ That's all the changes we applied to the test
 
 ```diff
 it("The happy path should work", () => {
-+ cy.server();
-+ cy.route("POST", "**/api/users")
++ cy.intercept("POST", "**/api/users")
 +   .as("signup-request");
   cy.visit(paths.register);
   const random = Math.floor(Math.random() * 100000);

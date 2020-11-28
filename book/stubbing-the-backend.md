@@ -50,22 +50,27 @@ const user = {
 };
 ```
 
-- we need to instrument Cypress to intercept every AJAX request and respond with a static response. We use another feature of the `cy.route` command, introduced with the [Waiting for an AJAX request](waiting-for-ajax-request.md) chapter: passing a response
+- we need to instrument Cypress to intercept every AJAX request and respond with a static response. We use another feature of the `cy.intercept` command, introduced with the [Waiting for an AJAX request](waiting-for-ajax-request.md) chapter: passing a response
 
 ```diff
--cy.route("POST", "**/api/users").as("signup-request");
-+cy.route("POST", "**/api/users", {
-+ user: {
-+   username: "Tester",
-+   email: "user@realworld.io",
-+   token:
-+     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
+-cy.intercept("POST", "**/api/users").as("signup-request");
++cy.intercept("POST", "**/api/users", {
++ headers: { "Access-Control-Allow-Origin": "*" },
++ body: {
++   user: {
++     username: "Tester",
++     email: "user@realworld.io",
++     token:
++       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
++   }
 + }
 +}).as("signup-request");
 ```
 
 where does the `{user: {...}}` response come from? From inspecting the response of the back-end to the `POST` JAJAX call to the `/api/users` API
 <img src="../assets/images/stubbing-the-backend/signup-call-response.png" alt="The signup call response"/>
+
+please note that we must care about CORS too, without setting the headers with `headers: { "Access-Control-Allow-Origin": "*" }` the browser will block thr request because `localhost:4100` can't perform XHR requests to `localhost:3100` without proper CORS management.
 
 - we need to stub (the process of intercepting and responding with static data) even more AJAX calls because, once the signup flow is complete, the home page calls some more APIs to populate the page.
 
@@ -91,19 +96,22 @@ The Test Runner is a precious ally while trying to understand why the front-end 
 We can stub both the second and the third AJAX calls with
 
 ```javascript
-cy.route("GET", "**/api/tags", { tags: [] }).as("tags");
-cy.route("GET", "**/api/articles/feed**", {
-  articles: [],
-  articlesCount: 0
+cy.intercept("GET", "**/api/tags", { body: { tags: [] }, headers: { "Access-Control-Allow-Origin": "*" }, }).as("tags");
+cy.intercept("GET", "**/api/articles/feed**", {
+  body: {
+    articles: [],
+    articlesCount: 0
+  },
+  headers: { "Access-Control-Allow-Origin": "*" }
 }).as("feed");
 ```
 
 - we do not need to check the AJAX response payload anymore (since it's Cypress that responds in place of the back-end app)
 
 ```diff
--expect(xhr.status).to.equal(200);
+-expect(interception.response.statusCode).to.equal(200);
 
--cy.wrap(xhr.response.body)
+-cy.wrap(interception.response.body)
 - .should("have.property", "user")
 - .and(
 -   user =>
@@ -121,8 +129,8 @@ cy.route("GET", "**/api/articles/feed**", {
 
 ```diff
 cy.wait("@signup-request")
-.should(xhr =>
-  expect(xhr.request.body).deep.equal({
+.should(interception =>
+  expect(interception.request.body).deep.equal({
     user: {
       username: user.username,
       email: user.email,

@@ -34,9 +34,8 @@ context("The custom command could be run before the test code", () => {
       expect(user).to.have.property("email").and.not.to.be.empty;
     });
 
-    cy.server();
-    cy.route("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
-    cy.route(
+    cy.intercept("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
+    cy.intercept(
       "GET",
       "**/api/articles/feed**",
       "fixture:articles/empty-articles"
@@ -61,9 +60,9 @@ But, when running it, we get an error from Cypress
 the Test Runner speaks for itself: the [RealWorld](the-realworld-project.md) front-end fires a `GET api/user` expecting the same data returned by the signup AJAX request (`POST api/users`), nothing that we cannot stub and wait in a while
 
 ```diff
-+cy.route("GET", "**/api/user", "fixture:users/signup").as("get-user");
-cy.route("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
-cy.route("GET", "**/api/articles/feed**", "fixture:articles/empty-articles").as("get-feed");
++cy.intercept("GET", "**/api/user", "fixture:users/signup").as("get-user");
+cy.intercept("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
+cy.intercept("GET", "**/api/articles/feed**", "fixture:articles/empty-articles").as("get-feed");
 ```
 
 ```diff
@@ -85,8 +84,10 @@ Since the front-end does a call to the `GET api/user` API as its very first thin
 
 -Cypress.Commands.add("authenticateIntegration", () => {
 +Cypress.Commands.add("authenticateAndVisitIntegration", path => {
-+ cy.server();
-+ cy.route("GET", "**/api/user", "fixture:users/signup").as("get-user");
++ cy.intercept("GET", "**/api/user", {
++   fixture: "users/signup",
++   headers: { "Access-Control-Allow-Origin": "*" }
++ }).as("get-user");
   cy.fixture("users/signup")
     .its("user")
     .should(
@@ -111,10 +112,9 @@ it("Should leverage the custom authentication command", () => {
 -   expect(user).to.have.property("email").and.not.to.be.empty;
 - });
 
-  cy.server();
-- cy.route("GET", "**/api/user", "fixture:users/signup").as("get-user");
-  cy.route("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
-  cy.route("GET", "**/api/articles/feed**", "fixture:articles/empty-articles").as("get-feed");
+- cy.intercept("GET", "/api/user", { fixture: "users/signup.json", headers }).as("get-user");
+  cy.intercept("GET", "**/api/tags", { fixture: "tags/empty-tags", headers }).as("tags");
+  cy.intercept("GET", "**/api/articles/feed**", { fixture: "articles/empty-articles", headers }).as("feed");
 
 - cy.visit("/");
 + cy.authenticateAndVisitIntegration("/");

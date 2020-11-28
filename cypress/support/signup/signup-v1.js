@@ -13,8 +13,7 @@ Cypress.Commands.add("signupV1", ({ email, username, password } = {}) => {
   };
 
   // set up AJAX call interception
-  cy.server();
-  cy.route("POST", "**/api/users").as("signup-request");
+  cy.intercept("POST", "**/api/users").as("signup-request");
 
   cy.visit(paths.register);
 
@@ -28,8 +27,8 @@ Cypress.Commands.add("signupV1", ({ email, username, password } = {}) => {
     .within(() => cy.findByText(strings.signUp).click())
 
   // ... and AJAX call waiting
-  cy.wait("@signup-request").should(xhr => {
-    expect(xhr.request.body).deep.equal({
+  cy.wait("@signup-request").should(interception => {
+    expect(interception.request.body).deep.equal({
       user: {
         username: user.username,
         email: user.email,
@@ -37,9 +36,9 @@ Cypress.Commands.add("signupV1", ({ email, username, password } = {}) => {
       }
     });
 
-    expect(xhr.status).to.equal(200);
+    expect(interception.response.statusCode).to.equal(200);
 
-    cy.wrap(xhr.response.body)
+    cy.wrap(interception.response.body)
       .should("have.property", "user")
       .and(
         user =>
@@ -55,9 +54,6 @@ Cypress.Commands.add("signupV1", ({ email, username, password } = {}) => {
 
   // end of the flow
   cy.findByText(noArticles).should("be.visible");
-
-  // restore the original cy.server behavior
-  cy.server({ enable: false });
 
   cy.then(() => user);
 });

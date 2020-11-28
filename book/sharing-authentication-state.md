@@ -102,8 +102,8 @@ let previousUserData = {};
 +     localStorage.setItem("jwt", previousUserData.jwt);
 
 +     cy.visit("/")
-        // use the "New Post" string to detect if the user is authenticated or not
-+       .findByText(newPost)
+      // use the "New Post" string to detect if the user is authenticated or not
++     cy.findByText(newPost)
 +       .then($el => $el.length !== 0)
 +       .then(userIsAuthenticated => {
 +         if (userIsAuthenticated) {
@@ -159,8 +159,8 @@ localStorage.setItem("jwt", previousUserData.jwt);
 
 ```javascript
 cy.visit("/")
-  // use the "New Post" string to detect if the user is authenticated or not
-  .findByText(newPost)
+// use the "New Post" string to detect if the user is authenticated or not
+cy.findByText(newPost)
   .then($el => $el.length !== 0)
   .then(userIsAuthenticated => {
     // now you know if the user is authenticated or not

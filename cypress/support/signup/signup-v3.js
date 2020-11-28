@@ -18,8 +18,8 @@ Cypress.Commands.add(
       localStorage.setItem("jwt", previousUserData.jwt);
 
       cy.visit("/")
-        // use the "New Post" string to detect if the user is authenticated or not
-        .findByText(newPost)
+      // use the "New Post" string to detect if the user is authenticated or not
+      cy.findByText(newPost)
         .then($el => $el.length !== 0)
         .then(userIsAuthenticated => {
           if (userIsAuthenticated) {
@@ -46,8 +46,7 @@ Cypress.Commands.add(
       };
 
       // set up AJAX call interception
-      cy.server();
-      cy.route("POST", "**/api/users").as("signup-request");
+      cy.intercept("POST", "**/api/users").as("signup-request");
 
       cy.visit(paths.register);
 
@@ -56,8 +55,8 @@ Cypress.Commands.add(
         .invoke("signup", user);
 
       // ... and AJAX call waiting
-      cy.wait("@signup-request").should(xhr => {
-        expect(xhr.request.body).deep.equal({
+      cy.wait("@signup-request").should(interception => {
+        expect(interception.request.body).deep.equal({
           user: {
             username: user.username,
             email: user.email,
@@ -65,9 +64,9 @@ Cypress.Commands.add(
           }
         });
 
-        expect(xhr.status).to.equal(200);
+        expect(interception.response.statusCode).to.equal(200);
 
-        cy.wrap(xhr.response.body)
+        cy.wrap(interception.response.body)
           .should("have.property", "user")
           .and(
             user =>
@@ -83,9 +82,6 @@ Cypress.Commands.add(
 
       // end of the flow
       cy.findByText(noArticles).should("be.visible");
-
-      // restore the original cy.server behavior
-      cy.server({ enable: false });
 
       // wait until the localStorage token is saved
       cy.wrap(localStorage)

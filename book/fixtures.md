@@ -3,13 +3,16 @@
 In the <i>signup-1.integration.spec.js</i> test, every back-end stub has the response set inline, like the `api/users` stub
 
 ```javascript
-cy.route("POST", "**/api/users", {
-  user: {
-    username: "Tester",
-    email: "user@realworld.io",
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
-  }
+cy.intercept("POST", "**/api/users", {
+  body: {
+    user: {
+      username: "Tester",
+      email: "user@realworld.io",
+      token:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
+    }
+  },
+  headers: { "Access-Control-Allow-Origin": "*" }
 }).as("signup-request");
 ```
 
@@ -27,15 +30,18 @@ The steps are straightforward:
 - replace the static response of the code with `"fixture:users/signup"`, Cypress looks for the `users/signup.json` file starting from the `cypress/fixture` directory
 
 ```diff
--cy.route("POST", "**/api/users", {
-- user: {
--   username: "Tester",
--   email: "user@realworld.io",
--   token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
-- }
--).as("signup-request");
-+cy.route("POST", "**/api/users", "fixture:users/signup").as("signup-request");
+-cy.intercept("POST", "**/api/users", {
+- body: {
+-   user: {
+-     username: "Tester",
+-     email: "user@realworld.io",
+-     token:
+-       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
+-   }
+- },
++ fixture: "users/signup",
+  headers: { "Access-Control-Allow-Origin": "*" }
+).as("signup-request");
 ```
 
 - do the same for the `**/api/tags` and `**/api/articles/feed**` stub
@@ -47,10 +53,10 @@ The steps are straightforward:
 [include](../cypress/fixtures/articles/empty-articles.json)
 
 ```diff
--cy.route("GET", "**/api/tags", { tags: [] }).as("tags");
--cy.route("GET", "**/api/articles/feed**", { articles: [], articlesCount: 0 }).as("feed");
-+cy.route("GET", "**/api/tags", "fixture:tags/empty-tags").as("tags");
-+cy.route("GET", "**/api/articles/feed**", "fixture:articles/empty-articles").as("feed");
+-cy.intercept("GET", "**/api/tags", { tags: [] }).as("tags");
+-cy.intercept("GET", "**/api/articles/feed**", { articles: [], articlesCount: 0 }).as("feed");
++cy.intercept("GET", "**/api/tags", { fixture: "tags/empty-tags", headers: { "Access-Control-Allow-Origin": "*" } }).as("tags");
++cy.intercept("GET", "**/api/articles/feed**", { fixture: "articles/empty-articles", headers: { "Access-Control-Allow-Origin": "*" } }).as("feed");
 ```
 
 The result is the same but the test code is way cleaner!

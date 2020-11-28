@@ -7,8 +7,7 @@ import { strings } from "../../../../realworld/frontend/src/components/Register"
 context("Signup flow", () => {
   it("The happy path should work", () => {
     // set up AJAX call interception
-    cy.server();
-    cy.route("POST", "**/api/users").as("signup-request");
+    cy.intercept("POST", "**/api/users").as("signup-request");
 
     cy.visit(paths.register);
 

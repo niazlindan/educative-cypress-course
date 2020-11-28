@@ -12,18 +12,17 @@ but there are a lot of error paths that are not been covered yet. The [RealWorld
 ![email already used](../assets/images/front-end-testing-on-steroids/error-path-1.png)
 ![email and username already used](../assets/images/front-end-testing-on-steroids/error-path-2.png)
 
-Spying the back-end response, it turns out that its something like `{ errors: { email: "is already taken." } }` and the response status is `422`. We need to reproduce it with the `cy.route`, [its options](https://docs.cypress.io/api/commands/route.html#Arguments) contemplate the `status` option too. All we need to do is passing all exploded options to the `cy.route` command
+Spying the back-end response, it turns out that its something like `{ errors: { email: "is already taken." } }` and the response status is `422`. We need to reproduce it with the `cy.intercept`, [its options](https://docs.cypress.io/api/commands/intercept.html#Arguments) contemplate the `statusCode` option too. All we need to do is passing all exploded options to the `cy.intercept` command
 
 ```javascript
-cy.route({
-  url: "**/api/users",
-  method: "POST",
-  status: 422,
-  response: { errors: { email: "is already taken." } }
+cy.intercept("POST", "**/api/users", {
+  body: { errors: { email: "is already taken." } },
+  statusCode: 422,
+  headers: { "Access-Control-Allow-Origin": "*" }
 }).as("signup-request");
 ```
 
-the `url`, `method`, and `response` are not new, the `status` option is. With a response like this, the error reported by the front-end is "email is already taken.". The test is not so many different from the old one (the happy path flow), that's the full code
+the `url`, `method`, and `body` are not new, the `statusCode` option is. With a response like this, the error reported by the front-end is "email is already taken.". The test is not so many different from the old one (the happy path flow), that's the full code
 
 ```javascript
 it("Should show an error if the back-end report that the email has already been used", () => {
@@ -33,12 +32,10 @@ it("Should show an error if the back-end report that the email has already been 
     password: "mysupersecretpassword"
   };
 
-  cy.server();
-  cy.route({
-    url: "**/api/users",
-    method: "POST",
-    status: 422,
-    response: { errors: { email: "is already taken." } }
+  cy.intercept("POST", "**/api/users", {
+    body: { errors: { email: "is already taken." } },
+    statusCode: 422,
+    headers: { "Access-Control-Allow-Origin": "*" }
   }).as("signup-request");
 
   cy.visit(paths.register);
@@ -58,20 +55,18 @@ We could make it even more generic testing the case of multiple errors coming fr
 ```diff
 -it("Should show an error if the back-end report that the email has already been used", () => {
 +it("Should show some errors if the back-end reports that some data has already been used", () => {
-+ const response = { errors: { username: "is already taken.", email: "is already taken." } };
++ const body = { errors: { username: "is already taken.", email: "is already taken." } };
   const user = {
     username: "Tester",
     email: "user@realworld.io",
     password: "mysupersecretpassword"
   };
 
-  cy.server();
-  cy.route({
-    url: "**/api/users",
-    method: "POST",
-    status: 422,
--   response: { errors: { email: "is already taken." } }
-+   response
+  cy.intercept("POST", "**/api/users", {
+-   body: { errors: { email: "is already taken." } }
++   body
+    statusCode: 422,
+    headers: { "Access-Control-Allow-Origin": "*" }
   }).as("signup-request");
 
   cy.visit(paths.register);
@@ -83,7 +78,7 @@ We could make it even more generic testing the case of multiple errors coming fr
   cy.wait("@signup-request");
 
 - cy.findByText("email is already taken.").should("be.visible");
-+ Object.entries(response.errors).map(([subject, error]) => {
++ Object.entries(body.errors).map(([subject, error]) => {
 +   cy.findByText(`${subject} ${error}`).should("be.visible");
 + });
 });
@@ -101,7 +96,7 @@ Almost all the code of the tests is the same. Keeping in mind that we must resis
 
 The last test checks that the front-end prints the errors as they are, so we are sure that the errors showed to the user are completely driven by the back-end.
 
-Please note that Cypress has other interesting options to simulate network behaviors, like the [`delay` option](https://docs.cypress.io/api/commands/route.html#Use-delays-for-responses) or using a [function as the response](https://docs.cypress.io/api/commands/route.html#Set-the-routing-options-using-a-callback-function), etc.
+Please note that Cypress has other interesting options to simulate network behaviors, check out the [cy.intercept documentation](https://docs.cypress.io/api/commands/intercept.html#Arguments).
 
 With the recent examples, it should be clear that E2E testing is good but not practical at all! So, write a few E2E tests (just for the happy paths) and concentrate on the UI Integration Tests.
 

@@ -58,8 +58,8 @@ Starting from the most recent test
 The `cy.wait("@signup-request")` call yields the whole XHR object. We can inspect its content doing
 
 ```javascript
-cy.wait("@signup-request").should(xhr => {
-  console.log(JSON.stringify(xhr));
+cy.wait("@signup-request").should(interception => {
+  console.log(JSON.stringify(interception));
 });
 ```
 
@@ -67,41 +67,99 @@ the result is the following
 
 ```json
 {
-  "xhr": {
-    "method": "POST",
-    "url": "http://localhost:3100/api/users",
-    "id": "xhr1737"
+  "id":"interceptedRequest13",
+  "request":{
+     "headers":{
+        "host":"localhost:3100",
+        "proxy-connection":"keep-alive",
+        "content-length":"102",
+        "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/6.0.1 Chrome/87.0.4280.67 Electron/11.0.2 Safari/537.36",
+        "content-type":"application/json",
+        "accept":"*/*",
+        "origin":"http://localhost:4100",
+        "sec-fetch-site":"same-site",
+        "sec-fetch-mode":"cors",
+        "sec-fetch-dest":"empty",
+        "referer":"http://localhost:4100/register",
+        "accept-encoding":"gzip, deflate, br",
+        "accept-language":"en-GB"
+     },
+     "url":"http://localhost:3100/api/users",
+     "method":"POST",
+     "httpVersion":"1.1",
+     "body":{
+        "user":{
+           "username":"Tester92306",
+           "email":"user+92306@realworld.io",
+           "password":"mysupersecretpassword"
+        }
+     }
   },
-  "id": "xhr1737",
-  "url": "http://localhost:3100/api/users",
-  "method": "POST",
-  "status": 200,
-  "statusMessage": "200 (OK)",
-  "request": {
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "body": {
-      "user": {
-        "username": "Tester6588",
-        "email": "user+6588@realworld.io",
-        "password": "mysupersecretpassword"
-      }
-    }
+  "state":"Complete",
+  "requestWaited":true,
+  "responseWaited":true,
+  "log":{
+     "name":"interception",
+     "displayName":"req",
+     "alias":"signup-request",
+     "aliasType":"route",
+     "type":"parent",
+     "event":true,
+     "method":"POST",
+     "timeout":4000,
+     "message":"",
+     "id":14,
+     "state":"passed",
+     "instrument":"command",
+     "url":"http://localhost:4100/register",
+     "hookId":"r3",
+     "testId":"r3",
+     "testCurrentRetry":0,
+     "viewportWidth":1000,
+     "viewportHeight":660,
+     "wallClockStartedAt":"2020-12-04T07:33:22.807Z",
+     "chainerId":"chainer131",
+     "ended":true,
+     "consoleProps":{
+        "Event":"interception",
+        "Alias":"signup-request",
+        "Method":"POST",
+        "URL":"http://localhost:3100/api/users",
+        "Matched":{
+           "method":"POST",
+           "url":"**/api/users"
+        },
+        "Snapshot":"The snapshot is missing. Displaying current state of the DOM."
+     },
+     "renderProps":{
+        "indicator":"successful",
+        "message":"http://localhost:3100/api/users Complete"
+     }
   },
-  "response": {
-    "headers": {
-      "content-type": "application/json; charset=utf-8"
-    },
-    "body": {
-      "user": {
-        "username": "tester6588",
-        "email": "user+6588@realworld.io",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNzA5ZTIyMWM2YTQ5MDVjM2VhMGM3ZCIsInVzZXJuYW1lIjoidGVzdGVyNjU4OCIsImV4cCI6MTU3Mjg0OTIwMiwiaWF0IjoxNTY3NjYxNjAyfQ.neUhshavvhwEUd4Tjf5Wo2xrmKUSVVRMJmlZEhIRp8c"
-      }
-    }
-  },
-  "duration": 1598
+  "response":{
+     "headers":{
+        "x-powered-by":"Express",
+        "access-control-allow-origin":"*",
+        "vary":"X-HTTP-Method-Override",
+        "content-type":"application/json; charset=utf-8",
+        "content-length":"281",
+        "etag":"W/\"119-wS6/hxBFrobqUXvmDtTbBGkoQM0\"",
+        "date":"Fri, 04 Dec 2020 07:33:24 GMT",
+        "connection":"keep-alive"
+     },
+     "url":"http://localhost:3100/api/users",
+     "method":null,
+     "httpVersion":"1.1",
+     "statusCode":200,
+     "statusMessage":"OK",
+     "body":{
+        "user":{
+           "username":"tester92306",
+           "email":"user+92306@realworld.io",
+           "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYzllNjQ0MzEyZjMxNWEyY2M4M2RjOCIsInVzZXJuYW1lIjoidGVzdGVyODgwMiIsImV4cCI6MTYxMjI1MTIwNCwiaWF0IjoxNjA3MDY3MjA0fQ.wLPhLQY9CAwAMQpriV_nlmW-3wg8QsQBYCjy0wwanKU"
+        }
+     }
+  }
 }
 ```
 
@@ -110,8 +168,7 @@ Let's assert about the payloads: we could chain assertions (the same we did with
 ```diff
 it("The happy path should work", () => {
     // set up AJAX call interception
-    cy.server();
-    cy.route("POST", "**/api/users").as("signup-request");
+    cy.intercept("POST", "**/api/users").as("signup-request");
 
     cy.visit(paths.register);
 
@@ -147,36 +204,36 @@ We return on that later, but that's the actual feedback of the Test Runner
 <br /><br />Chaining the assertions this way is nice but it does not give us all the freedom we need. What I mean: I try to analyze the yielded subject for every line of code
 
 ```javascript
-cy.wait("@signup-request") // yields the whole `xhr` object
-  .its("request.body") // yields `xhr.request.body`
-  .should("have.property", "user") // yields `xhr.request.body.user`
-  .and("be.a", "object") // (still) yields `xhr.request.body.user`
-  .should("have.property", "username", user.username) // yields `xhr.request.body.user.username`
-  // ... how we can assert about `xhr.request.body.user.email`?
-  .and("have.property", "email", user.email); // will fail because `xhr.request.body.user.username` does not have an `email` property
+cy.wait("@signup-request") // yields the whole `interception` object
+  .its("request.body") // yields `interception.request.body`
+  .should("have.property", "user") // yields `interception.request.body.user`
+  .and("be.a", "object") // (still) yields `interception.request.body.user`
+  .should("have.property", "username", user.username) // yields `interception.request.body.user.username`
+  // ... how we can assert about `interception.request.body.user.email`?
+  .and("have.property", "email", user.email); // will fail because `interception.request.body.user.username` does not have an `email` property
 ```
 
 Asserting directly on `cy.wait("@signup-request")` will not work, that's why we need to take advantage of another assertion syntax, the following one
 
 ```javascript
-cy.wait("@signup-request").should(xhr => {
-  expect(xhr.request.body)
+cy.wait("@signup-request").should(interception => {
+  expect(interception.request.body)
     .to.have.property("user")
     .and.to.be.a("object");
-  expect(xhr.request.body.user).to.have.property("username", user.username);
-  expect(xhr.request.body.user).to.have.property("email", user.email);
+  expect(interception.request.body.user).to.have.property("username", user.username);
+  expect(interception.request.body.user).to.have.property("email", user.email);
 });
 ```
 
-this way you always have a reference the original `xhr` object and its data. Since we have a list of all the things we need to assert about, writing all the assertions is easy:
+this way you always have a reference the original `interception` object and its data. Since we have a list of all the things we need to assert about, writing all the assertions is easy:
 
 - request payload assertions
 
 ```javascript
-expect(xhr.request.body)
+expect(interception.request.body)
   .to.have.property("user")
   .and.to.be.a("object");
-let payload = xhr.request.body.user;
+let payload = interception.request.body.user;
 expect(payload).to.have.property("username", user.username);
 expect(payload).to.have.property("email", user.email);
 expect(payload).to.have.property("password", user.password);
@@ -185,10 +242,10 @@ expect(payload).to.have.property("password", user.password);
 - response payload assertions
 
 ```javascript
-expect(xhr.response.body)
+expect(interception.response.body)
   .to.have.property("user")
   .and.to.be.a("object");
-payload = xhr.response.body.user;
+payload = interception.response.body.user;
 expect(payload).to.have.property("username", user.username.toLowerCase());
 expect(payload).to.have.property("email", user.email);
 expect(payload)
@@ -199,7 +256,7 @@ expect(payload)
 - response status assertion (it's important too)
 
 ```javascript
-expect(xhr.status).to.equal(200);
+expect(interception.response.statusCode).to.equal(200);
 ```
 
 The whole file is the following
@@ -226,8 +283,8 @@ The assertions show above are precise but not so smart. Their feedback is not sm
 We can maintain all the usefulness of the feedback while making them a little smarter leveraging one of the combinations offered by Cypress to write assertions. The next code asserts the same things in a more concise mode and with more concise feedback too
 
 ```javascript
-cy.wait("@signup-request").should(xhr => {
-  expect(xhr.request.body).deep.equal({
+cy.wait("@signup-request").should(interception => {
+  expect(interception.request.body).deep.equal({
     user: {
       username: user.username,
       email: user.email,
@@ -235,9 +292,9 @@ cy.wait("@signup-request").should(xhr => {
     }
   });
 
-  expect(xhr.status).to.equal(200);
+  expect(interception.response.statusCode).to.equal(200);
 
-  cy.wrap(xhr.response.body)
+  cy.wrap(interception.response.body)
     .should("have.property", "user")
     .and(
       user =>
@@ -264,9 +321,8 @@ You can find the whole test code in the _signup-8-simpler-assertions.e2e.spec.js
 For the sake of curiosity, we can condense the previous assertions again. For example, with the [`chai-subset`](https://www.npmjs.com/package/chai-subset) plugin ([Chai](https://www.chaijs.com) is a famous assertion library included by Cypress) we can write a giant assertion that checks everything: the status and the payloads
 
 ```javascript
-cy.wait("@signup-request").should(xhr => {
-  expect(xhr).to.containSubset({
-    status: 200,
+cy.wait("@signup-request").should(interception => {
+  expect(interception).to.containSubset({
     request: {
       body: {
         user: {
@@ -277,6 +333,7 @@ cy.wait("@signup-request").should(xhr => {
       }
     },
     response: {
+      statusCode: 200,
       body: {
         user: {
           username: user.username.toLowerCase(),

@@ -13,8 +13,7 @@ context("Signup flow", () => {
       password: "mysupersecretpassword"
     };
     // set up AJAX call interception
-    cy.server();
-    cy.route("POST", "**/api/users").as("signup-request");
+    cy.intercept("POST", "**/api/users").as("signup-request");
 
     cy.visit(paths.register);
 
@@ -28,9 +27,8 @@ context("Signup flow", () => {
       .within(() => cy.findByText(strings.signUp).click());
 
     // ... and AJAX call waiting
-    cy.wait("@signup-request").should(xhr => {
-      expect(xhr).to.containSubset({
-        status: 200,
+    cy.wait("@signup-request").should(interception => {
+      expect(interception).to.containSubset({
         request: {
           body: {
             user: {
@@ -41,6 +39,7 @@ context("Signup flow", () => {
           }
         },
         response: {
+          statusCode: 200,
           body: {
             user: {
               username: user.username.toLowerCase(),
@@ -50,7 +49,7 @@ context("Signup flow", () => {
         }
       });
 
-      expect(xhr.response.body.user)
+      expect(interception.response.body.user)
         .to.have.property("token")
         .and.to.be.a("string").and.not.to.be.empty;
     });

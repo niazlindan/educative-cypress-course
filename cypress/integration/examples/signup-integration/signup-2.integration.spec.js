@@ -4,6 +4,8 @@ import { paths } from "../../../../realworld/frontend/src/components/App";
 import { noArticles } from "../../../../realworld/frontend/src/components/ArticleList";
 import { strings } from "../../../../realworld/frontend/src/components/Register";
 
+const headers = { "Access-Control-Allow-Origin": "*" }
+
 context("Signup flow", () => {
   it("The happy path should work", () => {
     const user = {
@@ -13,10 +15,9 @@ context("Signup flow", () => {
     };
 
     // set up AJAX call interception
-    cy.server();
-    cy.route("POST", "**/api/users", "fixture:users/signup").as("signup-request");
-    cy.route("GET", "**/api/tags", "fixture:tags/empty-tags").as("tags");
-    cy.route("GET", "**/api/articles/feed**", "fixture:articles/empty-articles").as("feed");
+    cy.intercept("POST", "**/api/users", { fixture: "users/signup", headers }).as("signup-request");
+    cy.intercept("GET", "**/api/tags", { fixture: "tags/empty-tags", headers }).as("tags");
+    cy.intercept("GET", "**/api/articles/feed**", { fixture: "articles/empty-articles", headers }).as("feed");
 
     cy.visit(paths.register);
 
@@ -34,8 +35,8 @@ context("Signup flow", () => {
 
     // ... and AJAX call waiting
     cy.wait("@signup-request")
-      .should(xhr =>
-        expect(xhr.request.body).deep.equal({
+      .should(interception =>
+        expect(interception.request.body).deep.equal({
           user: {
             username: user.username,
             email: user.email,

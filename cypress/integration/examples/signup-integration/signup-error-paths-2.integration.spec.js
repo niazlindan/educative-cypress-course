@@ -3,19 +3,17 @@
 import { paths } from "../../../../realworld/frontend/src/components/App";
 
 context("Signup flow", () => {
-  const testBody = response => {
+  const testBody = body => {
     const user = {
       username: "Tester",
       email: "user@realworld.io",
       password: "mysupersecretpassword"
     };
 
-    cy.server();
-    cy.route({
-      url: "**/api/users",
-      method: "POST",
-      status: 422,
-      response
+    cy.intercept("POST", "**/api/users", {
+      body,
+      statusCode: 422,
+      headers: { "Access-Control-Allow-Origin": "*" },
     }).as("signup-request");
 
     cy.visit(paths.register);
@@ -26,7 +24,7 @@ context("Signup flow", () => {
 
     cy.wait("@signup-request");
 
-    Object.entries(response.errors).map(([subject, error]) => {
+    Object.entries(body.errors).map(([subject, error]) => {
       cy.findByText(`${subject} ${error}`).should("be.visible");
     });
   };

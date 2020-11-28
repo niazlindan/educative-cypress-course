@@ -4,6 +4,8 @@ import { paths } from "../../../../realworld/frontend/src/components/App";
 import { noArticles } from "../../../../realworld/frontend/src/components/ArticleList";
 import { strings } from "../../../../realworld/frontend/src/components/Register";
 
+const headers = { "Access-Control-Allow-Origin": "*" }
+
 context("Signup flow", () => {
   it("The happy path should work", () => {
     const user = {
@@ -13,18 +15,22 @@ context("Signup flow", () => {
     };
 
     // set up AJAX call interception
-    cy.server();
-    cy.route("POST", "**/api/users", {
-      user: {
-        username: "Tester",
-        email: "user@realworld.io",
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
-      }
+    cy.intercept("POST", "**/api/users", {
+      body: {
+        user: {
+          username: "Tester",
+          email: "user@realworld.io",
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2ZhZjc4YTkzNGFiMDRhZjRhMzE0MCIsInVzZXJuYW1lIjoidGVzdGVyNzk1MzYiLCJleHAiOjE1NzM4MzY2ODAsImlhdCI6MTU2ODY0OTA4MH0.zcHxMz2Vx5h-EoiUZlRyUw0z_A_6AIZ0LzQgROvsPqw"
+        }
+      },
+      headers
     }).as("signup-request");
 
-    cy.route("GET", "**/api/tags", { tags: [] }).as("tags");
-    cy.route("GET", "**/api/articles/feed**", { articles: [], articlesCount: 0 }).as("feed");
+    cy.intercept("GET", "**/api/tags", { body: { tags: []}, headers }).as("tags");
+    cy.intercept("GET", "**/api/articles/feed**", { body: { articles: [], articlesCount: 0 }, headers }).as("feed");
+
+
 
     cy.visit(paths.register);
 
@@ -42,8 +48,8 @@ context("Signup flow", () => {
 
     // ... and AJAX call waiting
     cy.wait("@signup-request")
-      .should(xhr =>
-        expect(xhr.request.body).deep.equal({
+      .should(interception =>
+        expect(interception.request.body).deep.equal({
           user: {
             username: user.username,
             email: user.email,
