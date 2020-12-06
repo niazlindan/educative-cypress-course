@@ -23,6 +23,10 @@ This test has a lot of problems, first of all: it's not deterministic (**its beh
 
 <img src="../assets/images/e2e-test-defects-determinism/failure-second-time.jpg" alt="The test fails the second time" class="img-border"/>
 
+if you're running Cypress through the terminal, this is the result
+
+<img src="../assets/images/e2e-test-defects-determinism/failure-second-time-terminal.jpg" alt="The test fails the second time" class="img-border"/>
+
 There are more solutions, we could:
 
 - randomize the username and the email to create a unique user for every test run

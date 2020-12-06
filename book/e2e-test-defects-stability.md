@@ -6,6 +6,11 @@ If you run the test multiple times you can encounter some failures like this
 
 <img src="../assets/images/e2e-test-defects-stability/test-stability.png" alt="Test stability" class="img-border"/>
 
+or like this, if you're running Cypress through the terminal
+
+<img src="../assets/images/e2e-test-defects-determinism/failure-second-time-terminal.jpg" alt="The test fails the second time" class="img-border"/>
+
+
 In detail, the Cypress Test Runner says
 
 <div>
