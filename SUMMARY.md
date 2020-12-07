@@ -31,7 +31,7 @@
 - Polishing the E2E test
   - DOM elements selection
     - [data-testid](book/dom-elements-selection.md)
-    - [cypress-testing-library](book/cypress-testing-library.md)
+    - [@testing-library/cypress](book/cypress-testing-library.md)
   - [Sharing app constants](book/app-constants.md)
 - AJAX requests
   - [Waiting for an AJAX request](book/waiting-for-ajax-request.md)

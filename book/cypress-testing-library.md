@@ -1,4 +1,4 @@
-# cypress-testing-library
+# @testing-library/cypress
 
 Have you probably heard about the amazing [Testing Library](https://testing-library.com) of [Kent C. Dodds](https://kentcdodds.com) (and if you have not, do not worry, you are in the right place). Without anticipating too much, Testing Library is based on the assumption that **the tests must consume the web app the same way the consumer does**.
 
@@ -11,9 +11,9 @@ Take a look at the test we wrote
 
 After all, an input field with that responds to the `[data-testid=username]` selector do not give us the confidence that the user can consume it, nor that the right element has the `data-testid` attribute.
 
-The Testing Library has a lot of plugins, one of them is [dedicated to Cypress](https://github.com/testing-library/cypress-testing-library).
+The Testing Library has a lot of plugins, one of them is [dedicated to Cypress](https://github.com/testing-library/@testing-library/cypress).
 
-Adding a plugin to Cypress is straightforward, in case of cypress-testing-library, you must:
+Adding a plugin to Cypress is straightforward, in case of @testing-library/cypress, you must:
 
 - install it with `$ npm install --save-dev @testing-library/cypress`
 
@@ -93,12 +93,12 @@ it("The happy path should work", () => {
 
 we get an error
 
-![More elements error](../assets/images/cypress-testing-library/more-elements.png)
+![More elements error](../assets/images/@testing-library/cypress/more-elements.png)
 <br /><br />
 more in detail, the error is the following
 
 <div>
-    <img src="../assets/images/cypress-testing-library/more-elements-error.png" alt="More elements error" style="width: 100%; max-width: 576px; margin-left: auto; margin-right: auto;" class="img-border"/>
+    <img src="../assets/images/@testing-library/cypress/more-elements-error.png" alt="More elements error" style="width: 100%; max-width: 576px; margin-left: auto; margin-right: auto;" class="img-border"/>
 </div>
 <br /><br />
 

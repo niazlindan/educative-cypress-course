@@ -155,7 +155,7 @@ if (
 localStorage.setItem("jwt", previousUserData.jwt);
 ```
 
-- then, we must check that the token is still valid for the back-end application. It should not be a problem (unless the tests last for hours) but you never know, **test independence and stability must not be put at risk by a missing control**. Obviously, this check must be performend from the user perspective, as we read in the [cypress-testing-library](cypress-testing-library.md) chapter
+- then, we must check that the token is still valid for the back-end application. It should not be a problem (unless the tests last for hours) but you never know, **test independence and stability must not be put at risk by a missing control**. Obviously, this check must be performend from the user perspective, as we read in the [@testing-library/cypress](@testing-library/cypress.md) chapter
 
 ```javascript
 cy.visit("/")

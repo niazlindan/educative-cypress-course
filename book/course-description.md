@@ -38,7 +38,7 @@ We will alternate theoretical explanations with live coding sessions, at the end
   - [Asynchronous execution](cypress-waitings-and-execution-order.md#test-code-execution-order)
 - [Cypress as your main development browser](cypress-as-a-development-tool.md)
 - Best practices
-  - [How to identify DOM elements](cypress-testing-library.md)
+  - [How to identify DOM elements](@testing-library/cypress.md)
   - [Waitings instead of pauses, what deterministic events are](waiting-for-ajax-request.md#ajax-request-waiting)
   - [The right use of the assertions](payload-assertions.md)
 - [Why the tests must be as simple as possible](testing-rules.md#simple)
