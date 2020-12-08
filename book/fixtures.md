@@ -27,7 +27,7 @@ The steps are straightforward:
 <i>File: cypress/fixtures/users/signup.json</i>
 [include](../cypress/fixtures/users/signup.json)
 
-- replace the static response of the code with `"fixture:users/signup"`, Cypress looks for the `users/signup.json` file starting from the `cypress/fixture` directory
+- replace the static response of the code with `fixture: "users/signup"`, Cypress looks for the `users/signup.json` file starting from the `cypress/fixture` directory
 
 ```diff
 -cy.intercept("POST", "**/api/users", {

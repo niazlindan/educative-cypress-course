@@ -34,11 +34,11 @@ context("The custom command could be run before the test code", () => {
       expect(user).to.have.property("email").and.not.to.be.empty;
     });
 
-    cy.intercept("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
+    cy.intercept("GET", "**/api/tags", { fixture: "tags/empty-tags" }).as("get-tags");
     cy.intercept(
       "GET",
       "**/api/articles/feed**",
-      "fixture:articles/empty-articles"
+      { fixture: "articles/empty-articles" }
     ).as("get-feed");
 
     cy.visit("/");
@@ -60,9 +60,9 @@ But, when running it, we get an error from Cypress
 the Test Runner speaks for itself: the [RealWorld](the-realworld-project.md) front-end fires a `GET api/user` expecting the same data returned by the signup AJAX request (`POST api/users`), nothing that we cannot stub and wait in a while
 
 ```diff
-+cy.intercept("GET", "**/api/user", "fixture:users/signup").as("get-user");
-cy.intercept("GET", "**/api/tags", "fixture:tags/empty-tags").as("get-tags");
-cy.intercept("GET", "**/api/articles/feed**", "fixture:articles/empty-articles").as("get-feed");
++cy.intercept("GET", "**/api/user", { fixture: "users/signup" }).as("get-user");
+cy.intercept("GET", "**/api/tags", { fixture: "tags/empty-tags" }).as("get-tags");
+cy.intercept("GET", "**/api/articles/feed**", { fixture: "articles/empty-articles" }).as("get-feed");
 ```
 
 ```diff
