@@ -36,10 +36,11 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
+const mongooseOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 if(isProduction){
-  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 } else {
-  mongoose.connect('mongodb://localhost/conduit').then(() => {
+  mongoose.connect('mongodb://localhost/conduit', mongooseOptions).then(() => {
     if (process.env.PERSIST_DB !== "true") {
       console.log('The DB is going to be cleared');
       // see https://gist.github.com/ecasilla/20f3a82398f0aa97d260
